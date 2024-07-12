@@ -1,7 +1,6 @@
 package br.dev.ismael.jsis.cases.departamento;
 
-import br.dev.ismael.jsis.domain.application.cases.departamento.CreateDepartamentoUseCase;
-import br.dev.ismael.jsis.domain.application.dto.DepartamentoRequestDTO;
+import br.dev.ismael.jsis.domain.application.cases.departamento.FetchDepartamentoByLojaUseCase;
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;
 import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
@@ -14,7 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CreateDepartamentoUseCaseTest {
+public class FetchDepartamentoByLojaUseCaseTest {
     @Mock
     private LojaRepository lojaRepository;
 
@@ -30,11 +30,10 @@ public class CreateDepartamentoUseCaseTest {
     private DepartamentoRepository departamentoRepository;
 
     @InjectMocks
-    private CreateDepartamentoUseCase sut;
-
+    private FetchDepartamentoByLojaUseCase sut;
 
     @Test
-    @DisplayName("Deve ser possível cadastrar um departamento.")
+    @DisplayName("Deve retornar uma lista de departamentos.")
     public void test_sucesso(){
         Loja loja = Loja.builder()
                 .idLoja(UUID.randomUUID())
@@ -43,25 +42,26 @@ public class CreateDepartamentoUseCaseTest {
                 .nomeResponsavel("Responsavel Mock")
                 .createdAt(LocalDateTime.now())
                 .build();
-        when(this.lojaRepository.findById(any(UUID.class))).thenReturn(
-                Optional.of(loja)
-        );
 
-        when(this.departamentoRepository.save(any())).thenReturn(
-                Departamento.builder().idDepartamento(1).icone("teste.png").nome("departamento").titulo("departamento").loja(loja).build()
-        );
+        List<Departamento> departamentos = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            Departamento origem =
+                    Departamento.builder()
+                            .idDepartamento(i + 1)
+                            .loja(loja)
+                            .nome("nome" + 1)
+                            .titulo("titulo" + 1)
+                            .build()
+                    ;
 
-        var result = this.sut.execute(
-                DepartamentoRequestDTO.builder()
-                        .nome("teste")
-                        .titulo("teste")
-                        .icone("teste")
-                        .fk_loja(UUID.randomUUID())
-                        .build()
-        );
-        assertThat(result).hasFieldOrProperty("idDepartamento");
-        assertThat(result).isNotNull();
-        assertThat(result).isInstanceOf(Departamento.class);
+            departamentos.add(origem);
+        }
+        when(this.departamentoRepository.findByLojaId(any(String.class))).thenReturn(departamentos);
+
+        var result = this.sut.execute(loja.getIdLoja().toString());
+
+        assertThat(result).isNotEmpty();
+        assertThat(result).hasSize(20);
 
     }
 }
