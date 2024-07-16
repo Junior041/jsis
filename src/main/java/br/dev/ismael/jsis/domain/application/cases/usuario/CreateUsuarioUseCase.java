@@ -10,6 +10,7 @@ import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
 import br.dev.ismael.jsis.domain.enterprise.entities.Loja;
 import br.dev.ismael.jsis.domain.enterprise.entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -23,14 +24,17 @@ public class CreateUsuarioUseCase {
     private DepartamentoRepository departamentoRepository;
     @Autowired
     private LojaRepository lojaRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public Usuario execute(UsuarioRequestDTO usuarioRequestDTO){
-        this.usuarioRepository.findByEmailAndLoja(usuarioRequestDTO.getEmail(), usuarioRequestDTO.getFkLoja()).ifPresent(usuario -> {throw new JaCadastradoErro();});
+        this.usuarioRepository.findByEmailAndLojaIdLoja(usuarioRequestDTO.getEmail(), usuarioRequestDTO.getFkLoja()).ifPresent(usuario -> {throw new JaCadastradoErro();});
         Loja loja = this.lojaRepository.findById(usuarioRequestDTO.getFkLoja()).orElseThrow(() -> new DadoNaoEncontradoErro());
         Departamento departamento = this.departamentoRepository.findById(usuarioRequestDTO.getFkDepartamento()).orElseThrow(() -> new DadoNaoEncontradoErro());
+        String senha = this.passwordEncoder.encode(usuarioRequestDTO.getSenha());
         Usuario usuario = Usuario.builder()
                 .email(usuarioRequestDTO.getEmail())
-                .senha(usuarioRequestDTO.getSenha())
+                .senha(senha)
                 .departamento(departamento)
                 .loja(loja)
                 .build();
