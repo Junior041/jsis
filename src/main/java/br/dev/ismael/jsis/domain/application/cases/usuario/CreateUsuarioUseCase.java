@@ -8,6 +8,7 @@ import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;
 import br.dev.ismael.jsis.domain.application.repositories.UsuarioRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
 import br.dev.ismael.jsis.domain.enterprise.entities.Loja;
+import br.dev.ismael.jsis.domain.enterprise.entities.UserRoles;
 import br.dev.ismael.jsis.domain.enterprise.entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,6 +38,7 @@ public class CreateUsuarioUseCase {
                 .senha(senha)
                 .departamento(departamento)
                 .loja(loja)
+                .role(usuarioRequestDTO.getRole())
                 .build();
         return this.usuarioRepository.save(usuario);
 

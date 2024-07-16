@@ -1,27 +1,28 @@
 package br.dev.ismael.jsis.domain.application.dto;
 
-import br.dev.ismael.jsis.domain.enterprise.entities.UserRoles;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class UsuarioRequestDTO {
+public class RegisterDTO {
     @Schema(example = "teste@gmail.com")
     private String email;
-    @Schema(example = "senha")
+
+    @Schema(example = "password")
     private String senha;
-    @Schema(example = "2")
-    private Integer fkDepartamento;
+
+    @Schema(example = "admin")
+    private String role;
+
     @Schema(example = "UUID")
     private UUID fkLoja;
-    @Schema(example = "admin")
-    private UserRoles role;
+
+    @Schema(example = "2")
+    private Integer fkDepartamento;
 }

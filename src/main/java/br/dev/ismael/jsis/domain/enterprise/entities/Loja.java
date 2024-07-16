@@ -1,8 +1,10 @@
 package br.dev.ismael.jsis.domain.enterprise.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -11,6 +13,8 @@ import java.util.UUID;
 @Builder
 @Data
 @Entity(name = "loja")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Loja {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
