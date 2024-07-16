@@ -22,5 +22,5 @@ public class DepartamentoRequestDTO {
     private String icone;
 
     @Schema(example = " b43a65e0-3c79-485c-848b-8319159f3ebd ")
-    private UUID fk_loja;
+    private UUID fkLoja;
 }

@@ -19,7 +19,7 @@ public class CreateDepartamentoUseCase {
 
     public Departamento execute(DepartamentoRequestDTO departamentoRequestDTO){
 
-        Loja loja = this.lojaRepository.findById(departamentoRequestDTO.getFk_loja()).orElseThrow(() -> new DadoNaoEncontradoErro());
+        Loja loja = this.lojaRepository.findById(departamentoRequestDTO.getFkLoja()).orElseThrow(() -> new DadoNaoEncontradoErro());
 
         Departamento newDepartamento = Departamento.builder()
                 .icone(departamentoRequestDTO.getIcone())
