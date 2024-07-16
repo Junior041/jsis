@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Builder
 @Data
-@Entity(name = "emailPessoa")
+@Entity(name = "email_pessoa")
 public class EmailPessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -18,7 +18,7 @@ public class EmailPessoa {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, columnDefinition = "false", name = "recebeNovidades")
+    @Column(nullable = false, name = "recebeNovidades")
     private Boolean recebeNovidades;
 
     @ManyToOne

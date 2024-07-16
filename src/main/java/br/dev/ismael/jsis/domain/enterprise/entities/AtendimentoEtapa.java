@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Builder
 @Data
-@Entity(name = "atendimentoEtapa")
+@Entity(name = "atendimento_etapa")
 public class AtendimentoEtapa {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
