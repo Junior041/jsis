@@ -1,8 +1,9 @@
 package br.dev.ismael.jsis.cases.usuario;
 
 import br.dev.ismael.jsis.domain.application.cases.usuario.CreateUsuarioUseCase;
-import br.dev.ismael.jsis.domain.application.dto.LojaRequestDTO;
 import br.dev.ismael.jsis.domain.application.dto.UsuarioRequestDTO;
+import br.dev.ismael.jsis.domain.application.errors.DadoNaoEncontradoErro;
+import br.dev.ismael.jsis.domain.application.errors.JaCadastradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;
 import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;
 import br.dev.ismael.jsis.domain.application.repositories.UsuarioRepository;
@@ -71,6 +72,103 @@ public class CreateUsuarioUseCaseTest {
         );
         assertThat(result).isNotNull();
         assertThat(result).isInstanceOf(Usuario.class);
+    }
+
+    @Test
+    @DisplayName("Não deve ser possível criar um usuário, caso nao encontre a loja.")
+    public void test_loja_inexistente(){
+        Loja loja = Loja.builder()
+                .idLoja(UUID.randomUUID())
+                .cpfCnpj("000.000.000-00")
+                .nomeResponsavel("Teste Responsável")
+                .razaoSocial("teste SA")
+                .createdAt(LocalDateTime.now())
+                .build();
+        Departamento departamento = Departamento.builder()
+                .idDepartamento(1)
+                .loja(loja)
+                .nome("nome")
+                .titulo("titulo")
+                .build();
+        when(this.lojaRepository.findById(loja.getIdLoja())).thenReturn(Optional.of(loja));
+        when(this.usuarioRepository.findByEmailAndLoja(any(String.class),any(UUID.class))).thenReturn(Optional.empty());
+
+        try {
+            this.createUsuarioUseCase.execute(
+                    UsuarioRequestDTO.builder()
+                            .email("teste@gmail.com")
+                            .senha("senha")
+                            .fkLoja(loja.getIdLoja())
+                            .fkDepartamento(departamento.getIdDepartamento())
+                            .build()
+            );
+        }catch (Exception e){
+            assertThat(e).isInstanceOf(DadoNaoEncontradoErro.class);
+        }
+
+    }
+
+    @Test
+    @DisplayName("Não deve ser possível criar um usuário, caso nao encontre o departamento.")
+    public void test_departamento_inexistente(){
+        Loja loja = Loja.builder()
+                .idLoja(UUID.randomUUID())
+                .cpfCnpj("000.000.000-00")
+                .nomeResponsavel("Teste Responsável")
+                .razaoSocial("teste SA")
+                .createdAt(LocalDateTime.now())
+                .build();
+        Departamento departamento = Departamento.builder()
+                .idDepartamento(1)
+                .loja(loja)
+                .nome("nome")
+                .titulo("titulo")
+                .build();
+        when(this.lojaRepository.findById(loja.getIdLoja())).thenReturn(Optional.of(loja));
+        when(this.departamentoRepository.findById(departamento.getIdDepartamento())).thenReturn(Optional.of(departamento));
+        try {
+            this.createUsuarioUseCase.execute(
+                    UsuarioRequestDTO.builder()
+                            .email("teste@gmail.com")
+                            .senha("senha")
+                            .fkLoja(loja.getIdLoja())
+                            .fkDepartamento(departamento.getIdDepartamento())
+                            .build()
+            );
+        }catch (Exception e){
+            assertThat(e).isInstanceOf(DadoNaoEncontradoErro.class);
+        }
+    }
+
+    @Test
+    @DisplayName("Não deve ser possível criar um usuário, caso nao o usuário já esta cadastrado na loja.")
+    public void test_usuario_ja_cadastrado(){
+        Loja loja = Loja.builder()
+                .idLoja(UUID.randomUUID())
+                .cpfCnpj("000.000.000-00")
+                .nomeResponsavel("Teste Responsável")
+                .razaoSocial("teste SA")
+                .createdAt(LocalDateTime.now())
+                .build();
+        Departamento departamento = Departamento.builder()
+                .idDepartamento(1)
+                .loja(loja)
+                .nome("nome")
+                .titulo("titulo")
+                .build();
+        when(this.usuarioRepository.findByEmailAndLoja(any(String.class),any(UUID.class))).thenReturn(Optional.of(Usuario.builder().build()));
+        try {
+            this.createUsuarioUseCase.execute(
+                    UsuarioRequestDTO.builder()
+                            .email("teste@gmail.com")
+                            .senha("senha")
+                            .fkLoja(loja.getIdLoja())
+                            .fkDepartamento(departamento.getIdDepartamento())
+                            .build()
+            );
+        }catch (Exception e){
+            assertThat(e).isInstanceOf(JaCadastradoErro.class);
+        }
     }
 
 }
