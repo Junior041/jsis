@@ -10,7 +10,7 @@ import lombok.Data;
 public class Origem {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_origem")
+    @Column(name = "idOrigem")
     private Integer idOrigem;
 
     @Column(nullable = false)

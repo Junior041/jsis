@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_usuario")
+    @Column(name = "idUsuario")
     private UUID idUsuario ;
 
     @Column(nullable = false)
@@ -22,10 +22,10 @@ public class Usuario {
     private String senha;
 
     @ManyToOne
-    @JoinColumn(name = "fk_departamento", referencedColumnName = "id_departamento", nullable = true)
+    @JoinColumn(name = "fkDepartamento", referencedColumnName = "idDepartamento", nullable = true)
     private Departamento departamento;
 
     @ManyToOne
-    @JoinColumn(name = "fk_loja", referencedColumnName = "id_loja", nullable = false)
+    @JoinColumn(name = "fkLoja", referencedColumnName = "idLoja", nullable = false)
     private Loja loja;
 }

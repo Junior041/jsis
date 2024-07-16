@@ -10,25 +10,25 @@ import lombok.Data;
 public class Atendimento {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_atendimento")
+    @Column(name = "idAtendimento")
     private Integer idAtendimento;
 
     @Column(nullable = false)
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "fk_origem", referencedColumnName = "id_origem", nullable = false)
+    @JoinColumn(name = "fkOrigem", referencedColumnName = "idOrigem", nullable = false)
     private Origem origem;
 
     @ManyToOne
-    @JoinColumn(name = "fk_interesse", referencedColumnName = "id_interesse", nullable = false)
+    @JoinColumn(name = "fkInteresse", referencedColumnName = "idInteresse", nullable = false)
     private Interesse interesse;
 
     @ManyToOne
-    @JoinColumn(name = "fk_pessoa", referencedColumnName = "id_pessoa", nullable = false)
+    @JoinColumn(name = "fkPessoa", referencedColumnName = "idPessoa", nullable = false)
     private Pessoa pessoa;
 
     @ManyToOne
-    @JoinColumn(name = "fk_loja", referencedColumnName = "id_loja", nullable = false)
+    @JoinColumn(name = "fkLoja", referencedColumnName = "idLoja", nullable = false)
     private Loja loja;
 }

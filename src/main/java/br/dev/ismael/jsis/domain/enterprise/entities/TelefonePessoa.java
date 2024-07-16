@@ -8,11 +8,11 @@ import java.util.UUID;
 
 @Builder
 @Data
-@Entity(name = "telefone_pessoa")
+@Entity(name = "telefonePessoa")
 public class TelefonePessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_telefone_pessoa")
+    @Column(name = "idTelefonePessoa")
     private UUID idTelefonePessoa ;
 
     @Column(nullable = false)
@@ -25,6 +25,6 @@ public class TelefonePessoa {
     private Boolean whatsapp;
 
     @ManyToOne
-    @JoinColumn(name = "fk_pessoa", referencedColumnName = "id_pessoa", nullable = false)
+    @JoinColumn(name = "fkPessoa", referencedColumnName = "idPessoa", nullable = false)
     private Pessoa pessoa;
 }

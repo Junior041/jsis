@@ -14,19 +14,19 @@ import java.util.UUID;
 public class Loja {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_loja")
+    @Column(name = "idLoja")
     private UUID idLoja;
 
-    @Column(name = "razao_social")
+    @Column(name = "razaoSocial")
     private String razaoSocial;
 
-    @Column(unique = true, name = "cpf_cnpj")
+    @Column(unique = true, name = "cpfCnpj")
     private String cpfCnpj;
 
-    @Column(name = "nome_responsavel")
+    @Column(name = "nomeResponsavel")
     private String nomeResponsavel;
 
     @CreationTimestamp
-    @Column(name = "created_at")
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
 }

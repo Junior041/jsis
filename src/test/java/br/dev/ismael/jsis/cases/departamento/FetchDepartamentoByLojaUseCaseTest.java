@@ -56,7 +56,7 @@ public class FetchDepartamentoByLojaUseCaseTest {
 
             departamentos.add(origem);
         }
-        when(this.departamentoRepository.findByLojaId(any(String.class))).thenReturn(departamentos);
+        when(this.departamentoRepository.findByLojaIdLoja(any(UUID.class))).thenReturn(departamentos);
 
         var result = this.sut.execute(loja.getIdLoja().toString());
 

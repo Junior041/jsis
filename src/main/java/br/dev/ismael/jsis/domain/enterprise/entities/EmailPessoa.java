@@ -8,20 +8,20 @@ import java.util.UUID;
 
 @Builder
 @Data
-@Entity(name = "email_pessoa")
+@Entity(name = "emailPessoa")
 public class EmailPessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_email_pessoa")
+    @Column(name = "idEmailPessoa")
     private UUID idEmailPessoa ;
 
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, columnDefinition = "false", name = "recebe_novidades")
+    @Column(nullable = false, columnDefinition = "false", name = "recebeNovidades")
     private Boolean recebeNovidades;
 
     @ManyToOne
-    @JoinColumn(name = "fk_pessoa", referencedColumnName = "id_pessoa", nullable = false)
+    @JoinColumn(name = "fkPessoa", referencedColumnName = "idPessoa", nullable = false)
     private Pessoa pessoa;
 }

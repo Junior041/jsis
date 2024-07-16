@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class FetchDepartamentoByLojaUseCase {
@@ -13,6 +14,6 @@ public class FetchDepartamentoByLojaUseCase {
     private DepartamentoRepository departamentoRepository;
 
     public List<Departamento> execute(String lojaId){
-        return this.departamentoRepository.findByLojaId(lojaId);
+        return this.departamentoRepository.findByLojaIdLoja(UUID.fromString(lojaId));
     }
 }

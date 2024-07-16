@@ -10,24 +10,24 @@ import java.util.UUID;
 
 @Builder
 @Data
-@Entity(name = "email_loja")
+@Entity(name = "emailLoja")
 public class EmailLoja {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_email_loja")
+    @Column(name = "idEmailLoja")
     private UUID idEmailLoja;
 
     @Column()
     private String titulo;
 
-    @Column(name = "recebe_leads", columnDefinition = "true")
+    @Column(name = "recebeLeads", columnDefinition = "true")
     private Boolean recebeLeads;
 
     @ManyToOne
-    @JoinColumn(name = "fk_loja", referencedColumnName = "id_loja", nullable = false)
+    @JoinColumn(name = "fkLoja", referencedColumnName = "idLoja", nullable = false)
     private Loja loja;
 
     @CreationTimestamp
-    @Column(name = "created_at")
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
 }

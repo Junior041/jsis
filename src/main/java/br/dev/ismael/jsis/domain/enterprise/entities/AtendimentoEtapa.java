@@ -6,25 +6,25 @@ import lombok.Data;
 
 @Builder
 @Data
-@Entity(name = "atendimento_etapa")
+@Entity(name = "atendimentoEtapa")
 public class AtendimentoEtapa {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_atendimento_etapa")
+    @Column(name = "idAtendimentoEtapa")
     private Integer idAtendimentoEtapa;
 
     @Column(nullable = false)
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "fk_atendimento", referencedColumnName = "id_atendimento", nullable = false)
+    @JoinColumn(name = "fkAtendimento", referencedColumnName = "idAtendimento", nullable = false)
     private Atendimento atendimento;
 
     @ManyToOne
-    @JoinColumn(name = "fk_etapa", referencedColumnName = "id_etapa", nullable = false)
+    @JoinColumn(name = "fkEtapa", referencedColumnName = "idEtapa", nullable = false)
     private Etapa etapa;
 
     @ManyToOne
-    @JoinColumn(name = "fk_usuario", referencedColumnName = "id_usuario", nullable = false)
+    @JoinColumn(name = "fkUsuario", referencedColumnName = "idUsuario", nullable = false)
     private Usuario usuario;
 }

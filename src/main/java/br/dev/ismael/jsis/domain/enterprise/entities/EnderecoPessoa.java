@@ -8,11 +8,11 @@ import java.util.UUID;
 
 @Builder
 @Data
-@Entity(name = "endereco_pessoa")
+@Entity(name = "enderecoPessoa")
 public class EnderecoPessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_endereco_pessoa")
+    @Column(name = "idEnderecoPessoa")
     private UUID idEnderecoPessoa ;
 
     @Column(nullable = false)
@@ -34,6 +34,6 @@ public class EnderecoPessoa {
     private String complemento;
 
     @ManyToOne
-    @JoinColumn(name = "fk_pessoa", referencedColumnName = "id_pessoa", nullable = false)
+    @JoinColumn(name = "fkPessoa", referencedColumnName = "idPessoa", nullable = false)
     private Pessoa pessoa;
 }

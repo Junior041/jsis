@@ -12,13 +12,13 @@ import java.util.UUID;
 public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_pessoa")
+    @Column(name = "idPessoa")
     private UUID idPessoa ;
 
-    @Column(nullable = false, name = "primeiro_nome")
+    @Column(nullable = false, name = "primeiroNome")
     private String primeiroNome;
 
-    @Column(nullable = false, name = "ultimo_nome")
+    @Column(nullable = false, name = "ultimoNome")
     private String ultimoNome;
 
     @Column(nullable = false)
@@ -30,14 +30,14 @@ public class Pessoa {
     @Column()
     private String rg;
 
-    @Column(name = "data_nascimento")
+    @Column(name = "dataNascimento")
     private String dataNascimento;
 
     @ManyToOne
-    @JoinColumn(name = "cadastradoPorUsuarioId", referencedColumnName = "id_usuario", nullable = false)
+    @JoinColumn(name = "cadastradoPorUsuarioId", referencedColumnName = "idUsuario", nullable = false)
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "fk_loja", referencedColumnName = "id_loja", nullable = false)
+    @JoinColumn(name = "fkLoja", referencedColumnName = "idLoja", nullable = false)
     private Loja loja;
 }

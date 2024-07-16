@@ -54,7 +54,7 @@ public class CreateUsuarioUseCaseTest {
                 .build();
         when(this.lojaRepository.findById(loja.getIdLoja())).thenReturn(Optional.of(loja));
         when(this.departamentoRepository.findById(departamento.getIdDepartamento())).thenReturn(Optional.of(departamento));
-        when(this.usuarioRepository.findByEmailAndLoja(any(String.class),any(UUID.class))).thenReturn(Optional.empty());
+        when(this.usuarioRepository.findByEmailAndLojaIdLoja(any(String.class),any(UUID.class))).thenReturn(Optional.empty());
         when(this.usuarioRepository.save(any(Usuario.class))).thenReturn(Usuario.builder()
                 .idUsuario(UUID.randomUUID())
                 .email("teste@gmail.com")
@@ -91,7 +91,7 @@ public class CreateUsuarioUseCaseTest {
                 .titulo("titulo")
                 .build();
         when(this.lojaRepository.findById(loja.getIdLoja())).thenReturn(Optional.of(loja));
-        when(this.usuarioRepository.findByEmailAndLoja(any(String.class),any(UUID.class))).thenReturn(Optional.empty());
+        when(this.usuarioRepository.findByEmailAndLojaIdLoja(any(String.class),any(UUID.class))).thenReturn(Optional.empty());
 
         try {
             this.createUsuarioUseCase.execute(
@@ -156,7 +156,7 @@ public class CreateUsuarioUseCaseTest {
                 .nome("nome")
                 .titulo("titulo")
                 .build();
-        when(this.usuarioRepository.findByEmailAndLoja(any(String.class),any(UUID.class))).thenReturn(Optional.of(Usuario.builder().build()));
+        when(this.usuarioRepository.findByEmailAndLojaIdLoja(any(String.class),any(UUID.class))).thenReturn(Optional.of(Usuario.builder().build()));
         try {
             this.createUsuarioUseCase.execute(
                     UsuarioRequestDTO.builder()

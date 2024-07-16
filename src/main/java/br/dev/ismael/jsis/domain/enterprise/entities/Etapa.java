@@ -10,7 +10,7 @@ import lombok.Data;
 public class Etapa {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_etapa")
+    @Column(name = "idEtapa")
     private Integer idEtapa;
 
     @Column(nullable = false)
@@ -26,6 +26,6 @@ public class Etapa {
     private String corHexadecimal;
 
     @ManyToOne
-    @JoinColumn(name = "fk_departamento", referencedColumnName = "id_departamento", nullable = false)
+    @JoinColumn(name = "fkDepartamento", referencedColumnName = "idDepartamento", nullable = false)
     private Departamento departamento;
 }
