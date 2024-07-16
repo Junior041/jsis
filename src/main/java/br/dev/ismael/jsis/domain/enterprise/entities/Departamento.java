@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Departamento {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_departamento")
+    @Column(name = "idDepartamento")
     private Integer idDepartamento;
 
     @Column(nullable = false)
@@ -25,6 +25,6 @@ public class Departamento {
     private String icone;
 
     @ManyToOne
-    @JoinColumn(name = "fk_loja", referencedColumnName = "id_loja", nullable = false)
+    @JoinColumn(name = "fkLoja", referencedColumnName = "idLoja", nullable = false)
     private Loja loja;
 }
