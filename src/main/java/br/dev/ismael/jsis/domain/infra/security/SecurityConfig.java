@@ -24,7 +24,7 @@ public class SecurityConfig {
             "/swagger-resource/**",
             "/actuator/**",
             "/h2-console/**",
-            "/auth/register"
+            "/auth/**"
     };
 
     @Bean
@@ -32,9 +32,7 @@ public class SecurityConfig {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(PERMIT_ALL_LIST).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/").hasRole(UserRoles.ADMIN.getRole())
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .build();
     }
