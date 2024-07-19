@@ -9,6 +9,7 @@ import br.dev.ismael.jsis.domain.enterprise.entities.Loja;
 import br.dev.ismael.jsis.domain.enterprise.entities.UserRoles;
 import br.dev.ismael.jsis.domain.enterprise.entities.Usuario;
 import br.dev.ismael.jsis.e2e.utils.TestUtils;
+import jakarta.transaction.Transactional;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@Transactional
 public class RegisterControllerTestE2E {
     private MockMvc mvc;
 
