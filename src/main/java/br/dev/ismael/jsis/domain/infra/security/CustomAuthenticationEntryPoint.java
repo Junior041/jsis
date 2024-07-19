@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {

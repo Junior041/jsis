@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 
 @Service
 public class JwtEncrypt extends Encrypter {
@@ -17,7 +18,7 @@ public class JwtEncrypt extends Encrypter {
         Algorithm algorithm = Algorithm.HMAC256("KeyProvisoria");
         var expiresIn = Instant.now().plus(Duration.ofHours(2));
         var token = JWT.create()
-                .withIssuer("SIG")
+                .withIssuer("JSIS")
                 .withClaim("sub",payload.getIdUsuario().toString())
                 .withClaim("idLoja",payload.getLoja().getIdLoja().toString())
                 .withExpiresAt(expiresIn)
@@ -31,7 +32,7 @@ public class JwtEncrypt extends Encrypter {
         try {
             Algorithm algorithm = Algorithm.HMAC256("KeyProvisoria");
             return JWT.require(algorithm)
-                    .withIssuer("SIG")
+                    .withIssuer("JSIS")
                     .build()
                     .verify(token)
                     .getSubject();
