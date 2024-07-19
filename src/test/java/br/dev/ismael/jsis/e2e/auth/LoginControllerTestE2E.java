@@ -1,6 +1,7 @@
 package br.dev.ismael.jsis.e2e.auth;
 
-import br.dev.ismael.jsis.domain.application.dto.UsuarioRequestDTO;
+import br.dev.ismael.jsis.domain.application.cryptography.Encrypter;
+import br.dev.ismael.jsis.domain.application.dto.AuthenticationDTO;
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;
 import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;
 import br.dev.ismael.jsis.domain.application.repositories.UsuarioRepository;
@@ -12,15 +13,14 @@ import br.dev.ismael.jsis.e2e.utils.TestUtils;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -31,9 +31,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class RegisterControllerTestE2E {
+public class LoginControllerTestE2E {
     private MockMvc mvc;
-
     @Autowired
     private WebApplicationContext context;
 
@@ -46,6 +45,12 @@ public class RegisterControllerTestE2E {
     @Autowired
     private DepartamentoRepository departamentoRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private Encrypter encrypter;
+
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context)
@@ -54,10 +59,8 @@ public class RegisterControllerTestE2E {
     }
 
     @Test
-    @Description("Deve ser possível cadastrar um usuario no sistema")
+    @Description("Deve ser possível se autenticar no sistema")
     public void test_sucesso() throws Exception {
-        // Criar e persistir a Loja
-
         Loja loja = lojaRepository.saveAndFlush(Loja.builder()
                 .idLoja(UUID.randomUUID())
                 .cpfCnpj("00000050000")
@@ -71,26 +74,27 @@ public class RegisterControllerTestE2E {
                 .titulo("Programação")
                 .icone("icone.png")
                 .build());
-        Usuario usuario = Usuario.builder()
+
+        Usuario usuario = this.usuarioRepository.saveAndFlush(Usuario.builder()
                 .email("teste@gmail.com")
                 .departamento(departamento)
                 .role(UserRoles.ADMIN)
-                .senha("senha")
+                .senha(passwordEncoder.encode("senha"))
                 .loja(loja)
+                .build());
+        AuthenticationDTO authenticationDTO = AuthenticationDTO.builder()
+                .email(usuario.getEmail())
+                .senha("senha")
                 .build();
-        this.usuarioRepository.saveAndFlush(usuario);
-        UsuarioRequestDTO usuarioRequestDTO = new UsuarioRequestDTO();
-
-        BeanUtils.copyProperties(usuario, usuarioRequestDTO);
-        usuarioRequestDTO.setEmail("teste2@gmail.com");
-        usuarioRequestDTO.setFkLoja(loja.getIdLoja());
-        usuarioRequestDTO.setFkDepartamento(departamento.getIdDepartamento());
-        var result = mvc.perform(MockMvcRequestBuilders.post("/auth/register")
+        var result = mvc.perform(MockMvcRequestBuilders.post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(TestUtils.objectToJSON(usuarioRequestDTO))
-                        .header("Authorization",new TestUtils().createJWT(usuario)));
-        result.andExpect(MockMvcResultMatchers.status().isOk());
-        Boolean usuarioInDatabase = this.usuarioRepository.findByEmail(usuarioRequestDTO.getEmail()).isPresent();
-        assertThat(usuarioInDatabase).isTrue();
+                        .content(TestUtils.objectToJSON(authenticationDTO)))
+                .andReturn();
+
+        String token = result.getResponse().getContentAsString();
+        assertThat(token).isInstanceOf(String.class);
+        var tokenIsAssigned = this.encrypter.validate(token);
+        assertThat(tokenIsAssigned).isEqualTo(usuario.getIdUsuario().toString());
     }
+
 }
