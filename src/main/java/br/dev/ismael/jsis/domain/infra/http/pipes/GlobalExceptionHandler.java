@@ -31,6 +31,7 @@ public class GlobalExceptionHandler {
 
     // Método para determinar o status HTTP baseado na exceção
     private HttpStatus determineHttpStatus(Exception ex) {
+        System.out.println(ex);
         // Aqui você pode adicionar lógica para retornar diferentes status HTTP com base no tipo de exceção
         if (ex instanceof DadoNaoEncontradoErro || ex instanceof JaCadastradoErro ) {
             return HttpStatus.BAD_REQUEST;

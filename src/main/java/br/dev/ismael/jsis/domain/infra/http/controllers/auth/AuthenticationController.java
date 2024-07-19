@@ -26,7 +26,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     @Operation(description = "Requisição utilizada para retornar o JWT utilizado para autenticação no sistema.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(name = "JWT", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c", description = "JWT utilizado para comunicação com a api."), mediaType = "string")),
+            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(name = "JWT", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c", description = "JWT utilizado para comunicação com a api."))),
             @ApiResponse(responseCode = "401", description = "Acesso negado!", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO authenticationDTO) throws Exception {
