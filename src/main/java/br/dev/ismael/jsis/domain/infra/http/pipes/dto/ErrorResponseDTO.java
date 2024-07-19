@@ -4,12 +4,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class ErrorResponseDTO {
     @Schema(example = "401", description = "Status de retorno da requisição.")
     public Number status;

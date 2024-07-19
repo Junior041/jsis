@@ -4,11 +4,11 @@ import br.dev.ismael.jsis.domain.application.cryptography.Encrypter;
 import br.dev.ismael.jsis.domain.enterprise.entities.Usuario;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Map;
 
 @Service
 public class JwtEncrypt extends Encrypter {
@@ -25,4 +25,19 @@ public class JwtEncrypt extends Encrypter {
 
         return token;
     }
+
+    @Override
+    public String validate(String token) throws JWTVerificationException {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256("KeyProvisoria");
+            return JWT.require(algorithm)
+                    .withIssuer("SIG")
+                    .build()
+                    .verify(token)
+                    .getSubject();
+        } catch (JWTVerificationException exception){
+            return "";
+        }
+    }
+
 }
