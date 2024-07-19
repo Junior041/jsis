@@ -23,8 +23,11 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/swagger-resource/**",
             "/actuator/**",
-            "/h2-console/**",
-            "/auth/**"
+            "/auth/login/"
+    };
+
+    private static final String[] POST_ADMIN_REQUESTS = {
+            "/auth/login/"
     };
 
     @Bean
@@ -32,7 +35,8 @@ public class SecurityConfig {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()
+                        .requestMatchers(PERMIT_ALL_LIST).permitAll()
+                        .requestMatchers(POST_ADMIN_REQUESTS).hasRole(UserRoles.ADMIN.getRole())
                 )
                 .build();
     }
