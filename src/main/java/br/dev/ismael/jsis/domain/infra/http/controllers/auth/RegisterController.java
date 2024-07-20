@@ -5,6 +5,7 @@ import br.dev.ismael.jsis.domain.application.dto.RegisterDTO;
 import br.dev.ismael.jsis.domain.application.dto.UsuarioRequestDTO;
 import br.dev.ismael.jsis.domain.enterprise.entities.UserRoles;
 import br.dev.ismael.jsis.domain.infra.http.pipes.dto.ErrorResponseDTO;
+import br.dev.ismael.jsis.domain.infra.security.PublicRoute;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,9 +33,8 @@ public class RegisterController {
             @ApiResponse(responseCode = "400", description = "Dado não encontrado.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "Ja cadastrado.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(responseCode = "201", description = "Usuario cadastrado com sucesso.")
-    }
-
-    )
+    })
+    @PublicRoute()
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterDTO registerDTO){
         UsuarioRequestDTO usuarioRequestDTO = new UsuarioRequestDTO();
         BeanUtils.copyProperties(registerDTO, usuarioRequestDTO);

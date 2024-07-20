@@ -24,11 +24,12 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             "/swagger-resource/**",
             "/actuator/**",
-            "/auth/login"
+            "/auth/login",
+            "/auth/register"
     };
 
     private static final String[] POST_ADMIN_REQUESTS = {
-            "/auth/register"
+            "/departamento"
     };
 
     @Autowired
