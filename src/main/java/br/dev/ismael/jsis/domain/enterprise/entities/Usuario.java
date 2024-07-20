@@ -46,7 +46,26 @@ public class Usuario implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<>();
-        list.add(new SimpleGrantedAuthority("ROLE_" + this.role));
+        switch (this.role){
+            case ADMIN -> {
+                list.add(new SimpleGrantedAuthority("ROLE_" + UserRoles.ADMIN));
+                list.add(new SimpleGrantedAuthority("ROLE_" + UserRoles.GUEST));
+                list.add(new SimpleGrantedAuthority("ROLE_" + UserRoles.MANAGER));
+                list.add(new SimpleGrantedAuthority("ROLE_" + UserRoles.USER));
+            }
+            case GUEST -> {
+                list.add(new SimpleGrantedAuthority("ROLE_" + UserRoles.GUEST));
+                list.add(new SimpleGrantedAuthority("ROLE_" + UserRoles.USER));
+            }
+            case MANAGER -> {
+                list.add(new SimpleGrantedAuthority("ROLE_" + UserRoles.MANAGER));
+                list.add(new SimpleGrantedAuthority("ROLE_" + UserRoles.USER));
+            }
+            case USER -> {
+                list.add(new SimpleGrantedAuthority("ROLE_" + UserRoles.USER));
+            }
+            default -> throw new IllegalArgumentException("Invalid role: " + this.role);
+        }
         return list;
     }
 
