@@ -14,7 +14,7 @@ public class FetchEtapaByDepartamentoUseCase {
     private EtapaRepository etapaRepository;
 
     public List<EtapaResponseDTO> execute(Integer fkDepartamento){
-        List<Etapa> etapas = this.etapaRepository.findByFkDepartamento(fkDepartamento);
+        List<Etapa> etapas = this.etapaRepository.findByDepartamentoIdDepartamento(fkDepartamento);
         return etapas.stream().map(EtapaResponseDTO::transformToDTO).toList();
     }
 }

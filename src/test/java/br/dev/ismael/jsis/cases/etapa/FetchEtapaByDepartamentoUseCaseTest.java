@@ -1,7 +1,6 @@
 package br.dev.ismael.jsis.cases.etapa;
 
 import br.dev.ismael.jsis.domain.application.cases.etapa.FetchEtapaByDepartamentoUseCase;
-import br.dev.ismael.jsis.domain.application.dto.departamento.DepartamentoResponseDTO;
 import br.dev.ismael.jsis.domain.application.repositories.EtapaRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
 import br.dev.ismael.jsis.domain.enterprise.entities.Etapa;
@@ -32,7 +31,7 @@ public class FetchEtapaByDepartamentoUseCaseTest {
     @DisplayName("Deve retornar uma lista de EtapaResponseDTO")
     @Test
     public void test_sucesso(){
-        when(this.etapaRepository.findByFkDepartamento(any())).thenReturn(List.of(Etapa.builder()
+        when(this.etapaRepository.findByDepartamentoIdDepartamento(any())).thenReturn(List.of(Etapa.builder()
                         .idEtapa(1)
                         .prioridade(1)
                         .corHexadecimal("#FFFF")
