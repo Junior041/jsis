@@ -42,7 +42,6 @@ public class CreateLojaUseCaseTest {
         );
         var result = this.sut.execute(
                 LojaRequestDTO.builder()
-
                         .cpfCnpj("000.000.000-00")
                         .nomeResponsavel("Teste Responsavel")
                         .razaoSocial("teste SA")
