@@ -1,5 +1,6 @@
 package br.dev.ismael.jsis.domain.application.cases.origem;
 
+import br.dev.ismael.jsis.domain.application.dto.OrigemRequestDTO;
 import br.dev.ismael.jsis.domain.application.errors.JaCadastradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.OrigemRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Origem;
@@ -11,11 +12,11 @@ public class CreateOrigemUseCase {
     @Autowired
     private OrigemRepository origemRepository;
 
-    public Origem execute(String nome, String descricao){
-        this.origemRepository.findByNome(nome).ifPresent((origem) -> new JaCadastradoErro());
+    public Origem execute(OrigemRequestDTO origemRequestDTO){
+        this.origemRepository.findByNome(origemRequestDTO.getNome()).ifPresent((origem) -> new JaCadastradoErro());
         Origem origem = Origem.builder()
-                .descricao(descricao)
-                .nome(nome)
+                .descricao(origemRequestDTO.getDescricao())
+                .nome(origemRequestDTO.getNome())
                 .build();
         return this.origemRepository.save(origem);
     }

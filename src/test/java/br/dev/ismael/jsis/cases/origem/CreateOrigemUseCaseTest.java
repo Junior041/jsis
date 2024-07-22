@@ -1,6 +1,7 @@
 package br.dev.ismael.jsis.cases.origem;
 
 import br.dev.ismael.jsis.domain.application.cases.origem.CreateOrigemUseCase;
+import br.dev.ismael.jsis.domain.application.dto.OrigemRequestDTO;
 import br.dev.ismael.jsis.domain.application.errors.JaCadastradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.OrigemRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Origem;
@@ -32,7 +33,10 @@ public class CreateOrigemUseCaseTest {
                         .nome("Whatsapp")
                         .descricao("Clientes vindos pelo Whatsapp.")
                 .build());
-        var result = this.createOrigemUseCase.execute("Whatsapp", "Clientes vindos pelo Whatsapp.");
+        var result = this.createOrigemUseCase.execute(OrigemRequestDTO.builder()
+                        .nome("Whatsapp")
+                        .descricao("Clientes vindos pelo Whatsapp.")
+                .build());
         assertThat(result).hasFieldOrProperty("idOrigem");
         assertThat(result.getNome()).isEqualTo("Whatsapp");
 
@@ -47,7 +51,10 @@ public class CreateOrigemUseCaseTest {
                         .build())
         );
         try {
-            this.createOrigemUseCase.execute("Whatsapp", "Clientes vindos pelo Whatsapp.");
+            this.createOrigemUseCase.execute(OrigemRequestDTO.builder()
+                    .nome("Whatsapp")
+                    .descricao("Clientes vindos pelo Whatsapp.")
+                    .build());
         }catch (Exception e){
             assertThat(e).isInstanceOf(JaCadastradoErro.class);
         }
