@@ -17,17 +17,6 @@ public class FetchDepartamentoByLojaUseCase {
 
     public List<DepartamentoResponseDTO> execute(String lojaId){
         List<Departamento> departamentos = this.departamentoRepository.findByLojaIdLoja(UUID.fromString(lojaId));
-        return this.TransformToDTO(departamentos);
-    }
-
-    private List<DepartamentoResponseDTO> TransformToDTO(List<Departamento> departamentos){
-        return departamentos.stream().map(departamento ->
-                DepartamentoResponseDTO.builder()
-                        .idDepartamento(departamento.getIdDepartamento())
-                        .nome(departamento.getNome())
-                        .icone(departamento.getIcone())
-                        .fkLoja(departamento.getLoja().getIdLoja())
-                        .build()
-        ).collect(Collectors.toList());
+        return departamentos.stream().map(DepartamentoResponseDTO::transformToDTO).toList();
     }
 }

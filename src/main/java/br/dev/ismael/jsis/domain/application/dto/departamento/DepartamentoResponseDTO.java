@@ -1,5 +1,6 @@
 package br.dev.ismael.jsis.domain.application.dto.departamento;
 
+import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,4 +26,14 @@ public class DepartamentoResponseDTO {
 
     @Schema(example = " b43a65e0-3c79-485c-848b-8319159f3ebd ")
     private UUID fkLoja;
+
+    public static DepartamentoResponseDTO transformToDTO(Departamento departamento){
+        return DepartamentoResponseDTO.builder()
+                .idDepartamento(departamento.getIdDepartamento())
+                .nome(departamento.getNome())
+                .titulo(departamento.getTitulo())
+                .icone(departamento.getIcone())
+                .fkLoja(departamento.getLoja().getIdLoja())
+                .build();
+    }
 }
