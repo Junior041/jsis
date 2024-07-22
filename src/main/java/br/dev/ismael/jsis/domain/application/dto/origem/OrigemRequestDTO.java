@@ -1,4 +1,4 @@
-package br.dev.ismael.jsis.domain.application.dto;
+package br.dev.ismael.jsis.domain.application.dto.origem;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

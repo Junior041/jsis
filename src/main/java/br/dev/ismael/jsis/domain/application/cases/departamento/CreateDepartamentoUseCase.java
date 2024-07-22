@@ -1,6 +1,6 @@
 package br.dev.ismael.jsis.domain.application.cases.departamento;
 
-import br.dev.ismael.jsis.domain.application.dto.DepartamentoRequestDTO;
+import br.dev.ismael.jsis.domain.application.dto.departamento.DepartamentoRequestDTO;
 import br.dev.ismael.jsis.domain.application.errors.DadoNaoEncontradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;
 import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;

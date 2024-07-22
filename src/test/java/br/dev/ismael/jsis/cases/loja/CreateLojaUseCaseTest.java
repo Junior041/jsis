@@ -1,7 +1,7 @@
 package br.dev.ismael.jsis.cases.loja;
 
 import br.dev.ismael.jsis.domain.application.cases.loja.CreateLojaUseCase;
-import br.dev.ismael.jsis.domain.application.dto.LojaRequestDTO;
+import br.dev.ismael.jsis.domain.application.dto.loja.LojaRequestDTO;
 import br.dev.ismael.jsis.domain.application.errors.JaCadastradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Loja;

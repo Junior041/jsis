@@ -1,7 +1,7 @@
 package br.dev.ismael.jsis.cases.usuario;
 
 import br.dev.ismael.jsis.domain.application.cases.usuario.CreateUsuarioUseCase;
-import br.dev.ismael.jsis.domain.application.dto.UsuarioRequestDTO;
+import br.dev.ismael.jsis.domain.application.dto.auth.UsuarioRequestDTO;
 import br.dev.ismael.jsis.domain.application.errors.DadoNaoEncontradoErro;
 import br.dev.ismael.jsis.domain.application.errors.JaCadastradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;

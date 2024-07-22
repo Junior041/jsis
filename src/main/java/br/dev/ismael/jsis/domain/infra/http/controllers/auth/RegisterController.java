@@ -1,8 +1,8 @@
 package br.dev.ismael.jsis.domain.infra.http.controllers.auth;
 
 import br.dev.ismael.jsis.domain.application.cases.usuario.CreateUsuarioUseCase;
-import br.dev.ismael.jsis.domain.application.dto.RegisterDTO;
-import br.dev.ismael.jsis.domain.application.dto.UsuarioRequestDTO;
+import br.dev.ismael.jsis.domain.application.dto.auth.RegisterDTO;
+import br.dev.ismael.jsis.domain.application.dto.auth.UsuarioRequestDTO;
 import br.dev.ismael.jsis.domain.enterprise.entities.UserRoles;
 import br.dev.ismael.jsis.domain.infra.http.pipes.dto.ErrorResponseDTO;
 import br.dev.ismael.jsis.domain.infra.security.PublicRoute;

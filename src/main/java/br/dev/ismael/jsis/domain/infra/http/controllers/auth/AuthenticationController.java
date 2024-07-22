@@ -1,7 +1,7 @@
 package br.dev.ismael.jsis.domain.infra.http.controllers.auth;
 
 import br.dev.ismael.jsis.domain.application.cases.usuario.LoginUseCase;
-import br.dev.ismael.jsis.domain.application.dto.AuthenticationDTO;
+import br.dev.ismael.jsis.domain.application.dto.auth.AuthenticationDTO;
 import br.dev.ismael.jsis.domain.infra.http.pipes.dto.ErrorResponseDTO;
 import br.dev.ismael.jsis.domain.infra.security.PublicRoute;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

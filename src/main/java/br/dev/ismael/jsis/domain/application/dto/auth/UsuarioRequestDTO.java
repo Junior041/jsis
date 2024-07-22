@@ -1,4 +1,4 @@
-package br.dev.ismael.jsis.domain.application.dto;
+package br.dev.ismael.jsis.domain.application.dto.auth;
 
 import br.dev.ismael.jsis.domain.enterprise.entities.UserRoles;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,6 +1,6 @@
 package br.dev.ismael.jsis.domain.application.cases.etapa;
 
-import br.dev.ismael.jsis.domain.application.dto.EtapaRequestDTO;
+import br.dev.ismael.jsis.domain.application.dto.etapa.EtapaRequestDTO;
 import br.dev.ismael.jsis.domain.application.errors.DadoNaoEncontradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;
 import br.dev.ismael.jsis.domain.application.repositories.EtapaRepository;

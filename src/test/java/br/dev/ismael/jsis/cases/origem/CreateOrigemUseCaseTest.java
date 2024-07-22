@@ -1,7 +1,7 @@
 package br.dev.ismael.jsis.cases.origem;
 
 import br.dev.ismael.jsis.domain.application.cases.origem.CreateOrigemUseCase;
-import br.dev.ismael.jsis.domain.application.dto.OrigemRequestDTO;
+import br.dev.ismael.jsis.domain.application.dto.origem.OrigemRequestDTO;
 import br.dev.ismael.jsis.domain.application.errors.JaCadastradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.OrigemRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Origem;

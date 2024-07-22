@@ -1,6 +1,5 @@
-package br.dev.ismael.jsis.domain.application.dto;
+package br.dev.ismael.jsis.domain.application.dto.etapa;
 
-import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

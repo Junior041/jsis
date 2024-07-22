@@ -1,6 +1,6 @@
 package br.dev.ismael.jsis.domain.application.cases.usuario;
 
-import br.dev.ismael.jsis.domain.application.dto.UsuarioRequestDTO;
+import br.dev.ismael.jsis.domain.application.dto.auth.UsuarioRequestDTO;
 import br.dev.ismael.jsis.domain.application.errors.DadoNaoEncontradoErro;
 import br.dev.ismael.jsis.domain.application.errors.JaCadastradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;
@@ -8,13 +8,10 @@ import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;
 import br.dev.ismael.jsis.domain.application.repositories.UsuarioRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
 import br.dev.ismael.jsis.domain.enterprise.entities.Loja;
-import br.dev.ismael.jsis.domain.enterprise.entities.UserRoles;
 import br.dev.ismael.jsis.domain.enterprise.entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class CreateUsuarioUseCase {

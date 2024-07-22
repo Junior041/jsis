@@ -1,7 +1,7 @@
 package br.dev.ismael.jsis.domain.infra.http.controllers.departamento;
 
 import br.dev.ismael.jsis.domain.application.cases.departamento.CreateDepartamentoUseCase;
-import br.dev.ismael.jsis.domain.application.dto.DepartamentoRequestDTO;
+import br.dev.ismael.jsis.domain.application.dto.departamento.DepartamentoRequestDTO;
 import br.dev.ismael.jsis.domain.infra.http.pipes.dto.ErrorResponseDTO;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

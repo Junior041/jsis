@@ -1,7 +1,7 @@
 package br.dev.ismael.jsis.domain.infra.http.controllers.origem;
 
 import br.dev.ismael.jsis.domain.application.cases.origem.CreateOrigemUseCase;
-import br.dev.ismael.jsis.domain.application.dto.OrigemRequestDTO;
+import br.dev.ismael.jsis.domain.application.dto.origem.OrigemRequestDTO;
 import br.dev.ismael.jsis.domain.infra.http.pipes.dto.ErrorResponseDTO;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

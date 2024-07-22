@@ -1,7 +1,7 @@
 package br.dev.ismael.jsis.e2e.auth;
 
 import br.dev.ismael.jsis.domain.application.cryptography.Encrypter;
-import br.dev.ismael.jsis.domain.application.dto.AuthenticationDTO;
+import br.dev.ismael.jsis.domain.application.dto.auth.AuthenticationDTO;
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;
 import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;
 import br.dev.ismael.jsis.domain.application.repositories.UsuarioRepository;
