@@ -24,7 +24,7 @@ public class Etapa {
     private String descricao;
 
     @Column()
-    private String prioridade;
+    private Integer prioridade;
 
     @Column()
     private String corHexadecimal;

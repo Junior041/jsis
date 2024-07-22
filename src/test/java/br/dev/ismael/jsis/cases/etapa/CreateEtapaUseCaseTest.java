@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -54,7 +55,7 @@ public class CreateEtapaUseCaseTest {
                 .corHexadecimal("#FFFF")
                 .descricao("Etapa em espera.")
                 .departamento(departamento)
-                .prioridade("1")
+                .prioridade(1)
                 .nome("Em Espera")
                 .build();
         when(this.etapaRepository.save(any())).thenReturn(etapa);
@@ -62,7 +63,7 @@ public class CreateEtapaUseCaseTest {
                         .corHexadecimal("#FFFF")
                         .descricao("Etapa em espera.")
                         .fkDepartamento(1)
-                        .prioridade("1")
+                        .prioridade(1)
                         .nome("Em Espera")
                 .build());
 
@@ -79,11 +80,51 @@ public class CreateEtapaUseCaseTest {
                     .corHexadecimal("#FFFF")
                     .descricao("Etapa em espera.")
                     .fkDepartamento(1)
-                    .prioridade("1")
+                    .prioridade(1)
                     .nome("Em Espera")
                     .build());
         }catch (Exception e){
             assertThat(e).isInstanceOf(DadoNaoEncontradoErro.class);
         }
+    }
+
+    @Test
+    @DisplayName("Caso a prioridade ja existir, deve por ela como ultima na prioridade.")
+    public void test_prioridade_repetida(){
+        Loja loja = Loja.builder()
+                .idLoja(UUID.randomUUID())
+                .cpfCnpj("000.000.000-00")
+                .nomeResponsavel("Teste Responsavel")
+                .razaoSocial("teste SA")
+                .build();
+        Departamento departamento = Departamento.builder()
+                .idDepartamento(1)
+                .loja(loja)
+                .nome("nome")
+                .titulo("titulo")
+                .build();
+        when(this.departamentoRepository.findById(any(Integer.class))).thenReturn(Optional.of(departamento));
+        Etapa etapa = Etapa.builder()
+                .idEtapa(1)
+                .corHexadecimal("#FFFF")
+                .descricao("Etapa em espera.")
+                .departamento(departamento)
+                .prioridade(2)
+                .nome("Em Espera")
+                .build();
+        when(this.etapaRepository.save(any())).thenReturn(etapa);
+        when(this.etapaRepository.findIfPrioridadeAlreadyExists(any(),any())).thenReturn(true);
+        when(this.etapaRepository.findMaxPrioridadeByDepartamentoId(any())).thenReturn(1);
+        var result = this.createEtapaUseCase.execute(EtapaRequestDTO.builder()
+                .corHexadecimal("#FFFF")
+                .descricao("Etapa em espera.")
+                .fkDepartamento(1)
+                .prioridade(1)
+                .nome("Em Espera")
+                .build());
+
+        assertThat(result).isNotNull();
+        assertThat(result).isInstanceOf(Etapa.class);
+        assertThat(result.getPrioridade()).isEqualTo(2);
     }
 }

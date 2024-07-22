@@ -1,6 +1,7 @@
 package br.dev.ismael.jsis.cases.loja;
 
 import br.dev.ismael.jsis.domain.application.cases.loja.GetAllLojaUseCase;
+import br.dev.ismael.jsis.domain.application.dto.loja.LojaResponseDTO;
 import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Loja;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GerAllLojaUseCaseTest {
+public class GetAllLojaUseCaseTest {
     @Mock
     private LojaRepository lojaRepository;
 
@@ -41,7 +42,7 @@ public class GerAllLojaUseCaseTest {
 
         when(this.lojaRepository.findAll()).thenReturn(lojas);
 
-        List<Loja> result = this.sut.execute();
+        List<LojaResponseDTO> result = this.sut.execute();
         assertThat(result).isNotEmpty();
         assertThat(result).hasSize(10);
     }

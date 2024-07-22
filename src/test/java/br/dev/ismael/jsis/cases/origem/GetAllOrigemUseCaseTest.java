@@ -1,6 +1,7 @@
 package br.dev.ismael.jsis.cases.origem;
 
 import br.dev.ismael.jsis.domain.application.cases.origem.GetAllOrigemUseCase;
+import br.dev.ismael.jsis.domain.application.dto.origem.OrigemResponseDTO;
 import br.dev.ismael.jsis.domain.application.repositories.OrigemRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Origem;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +40,7 @@ public class GetAllOrigemUseCaseTest {
 
         when(this.origemRepository.findAll()).thenReturn(origens);
 
-        List<Origem> result = this.sut.execute();
+        List<OrigemResponseDTO> result = this.sut.execute();
         assertThat(result).isNotEmpty();
         assertThat(result).hasSize(10);
     }

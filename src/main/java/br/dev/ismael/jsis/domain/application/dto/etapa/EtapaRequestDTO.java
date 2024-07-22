@@ -16,7 +16,7 @@ public class EtapaRequestDTO {
     private String descricao;
 
     @Schema(example ="1")
-    private String prioridade;
+    private Integer prioridade;
 
     @Schema(example ="#FFFFF")
     private String corHexadecimal;
