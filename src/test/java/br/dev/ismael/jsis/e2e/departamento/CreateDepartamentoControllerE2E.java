@@ -5,14 +5,9 @@ import br.dev.ismael.jsis.domain.application.dto.departamento.DepartamentoReques
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;
 import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;
 import br.dev.ismael.jsis.domain.application.repositories.UsuarioRepository;
-import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
-import br.dev.ismael.jsis.domain.enterprise.entities.Loja;
-import br.dev.ismael.jsis.domain.enterprise.entities.UserRoles;
-import br.dev.ismael.jsis.domain.enterprise.entities.Usuario;
 import br.dev.ismael.jsis.e2e.utils.IntegrationTestUtils;
 import br.dev.ismael.jsis.e2e.utils.TestUtils;
 import jakarta.transaction.Transactional;
-import jdk.jfr.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +23,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@Transactional
 public class CreateDepartamentoControllerE2E {
 
     private MockMvc mvc;
@@ -64,17 +60,17 @@ public class CreateDepartamentoControllerE2E {
     }
 
     @Test
-    public void testSuccess() throws Exception {
-        Loja loja = testUtils.createAndSaveLoja("00000050000", "Ismael Junior");
-        Departamento departamento = testUtils.createAndSaveDepartamento(loja, "Diretoria", "Diretoria", "icone.png");
+    public void test_sucesso() throws Exception {
+        Map<String, Object> tokenAndIdLoja = testUtils.createAndGetTokenForUser();
 
-        String token = testUtils.createAndGetTokenForUser("teste@gmail.com", "senha", loja, departamento, UserRoles.ADMIN);
+        String token = (String) tokenAndIdLoja.get("token");
+        UUID lojaId = (UUID) tokenAndIdLoja.get("idLoja");
 
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/departamento")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TestUtils.objectToJSON(
                         DepartamentoRequestDTO.builder()
-                                .fkLoja(loja.getIdLoja())
+                                .fkLoja(lojaId)
                                 .icone("icone.png")
                                 .nome("Vendas")
                                 .titulo("Vendas")
@@ -82,9 +78,9 @@ public class CreateDepartamentoControllerE2E {
                 ))
                 .header("Authorization", token)
         ).andReturn();
-
+        System.out.println(result.getResponse().getContentAsString());
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        Boolean departamentoInDatabase = this.departamentoRepository.findByTituloAndLojaIdLoja("Vendas", loja.getIdLoja()).isPresent();
+        Boolean departamentoInDatabase = this.departamentoRepository.findByTituloAndLojaIdLoja("Vendas", lojaId).isPresent();
         assertThat(departamentoInDatabase).isTrue();
     }
 }

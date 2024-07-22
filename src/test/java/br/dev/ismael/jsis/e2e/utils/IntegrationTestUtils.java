@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 @Component
 public class IntegrationTestUtils {
@@ -37,38 +39,43 @@ public class IntegrationTestUtils {
         this.encrypter = encrypter;
     }
 
-    public String createAndGetTokenForUser(String email, String senha, Loja loja, Departamento departamento, UserRoles role) throws Exception {
-        // Criar usuário
+    public Map<String, Object> createAndGetTokenForUser() throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        Loja loja = this.createAndSaveLoja();
+        Departamento departamento = this.createAndSaveDepartamento(loja);
         Usuario usuario = this.usuarioRepository.saveAndFlush(Usuario.builder()
                 .idUsuario(UUID.randomUUID())
                 .departamento(departamento)
-                .email(email)
-                .senha(this.passwordEncoder.encode(senha))
+                .email("teste@gmail.com")
+                .senha(this.passwordEncoder.encode("senha"))
                 .loja(loja)
-                .role(role)
+                .role(UserRoles.ADMIN)
                 .build());
 
         // Gerar token JWT
-        return this.encrypter.encrypt(usuario);
+        result.put("token", this.encrypter.encrypt(usuario));
+        result.put("idLoja", loja.getIdLoja());
+        return result;
     }
 
-    public Loja createAndSaveLoja(String cpfCnpj, String nomeResponsavel) {
+    private Loja createAndSaveLoja() {
         Loja loja = Loja.builder()
                 .idLoja(UUID.randomUUID())
-                .cpfCnpj(cpfCnpj)
-                .nomeResponsavel(nomeResponsavel)
+                .cpfCnpj("00000000")
+                .nomeResponsavel("Ismael")
+                .razaoSocial("Ismael LTDA")
                 .createdAt(LocalDateTime.now())
                 .build();
         return this.lojaRepository.saveAndFlush(loja);
     }
 
-    public Departamento createAndSaveDepartamento(Loja loja, String nome, String titulo, String icone) {
+    private Departamento createAndSaveDepartamento(Loja loja) {
         Departamento departamento = Departamento.builder()
                 .idDepartamento(1) // Ajuste conforme necessário para a geração do ID
                 .loja(loja)
-                .nome(nome)
-                .titulo(titulo)
-                .icone(icone)
+                .nome("Diretoria")
+                .titulo("Diretoria")
+                .icone("diretoria.png")
                 .build();
         return this.departamentoRepository.saveAndFlush(departamento);
     }

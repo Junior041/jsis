@@ -18,7 +18,8 @@ public class CreateDepartamentoUseCase {
     private LojaRepository lojaRepository;
 
     public Departamento execute(DepartamentoRequestDTO departamentoRequestDTO){
-
+        System.out.println("CASE - " + departamentoRequestDTO.getFkLoja());
+        System.out.println("REPOSITORY - " + this.lojaRepository.findAll().getFirst().getIdLoja());
         Loja loja = this.lojaRepository.findById(departamentoRequestDTO.getFkLoja()).orElseThrow(() -> new DadoNaoEncontradoErro());
 
         Departamento newDepartamento = Departamento.builder()
