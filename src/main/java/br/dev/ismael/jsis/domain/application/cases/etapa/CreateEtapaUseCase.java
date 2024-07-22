@@ -26,13 +26,7 @@ public class CreateEtapaUseCase {
         this.etapa.setNome(etapaRequestDTO.getNome());
         this.etapa.setCorHexadecimal(etapaRequestDTO.getCorHexadecimal());
         this.etapa.setDescricao(etapaRequestDTO.getDescricao());
-        this.ajustaOrdemDaPrioridade();
         return this.etapaRepository.save(this.etapa);
     }
 
-    private void ajustaOrdemDaPrioridade(){
-        boolean prioridadeAlreadyExists = this.etapaRepository.findIfPrioridadeAlreadyExists(this.etapa.getDepartamento().getIdDepartamento(), this.etapa.getPrioridade());
-        Integer maiorPrioridade = this.etapaRepository.findMaxPrioridadeByDepartamentoId(this.etapa.getDepartamento().getIdDepartamento());
-        this.etapa.setPrioridade(prioridadeAlreadyExists ? maiorPrioridade + 1 : this.etapa.getPrioridade());
-    }
 }

@@ -113,8 +113,6 @@ public class CreateEtapaUseCaseTest {
                 .nome("Em Espera")
                 .build();
         when(this.etapaRepository.save(any())).thenReturn(etapa);
-        when(this.etapaRepository.findIfPrioridadeAlreadyExists(any(),any())).thenReturn(true);
-        when(this.etapaRepository.findMaxPrioridadeByDepartamentoId(any())).thenReturn(1);
         var result = this.createEtapaUseCase.execute(EtapaRequestDTO.builder()
                 .corHexadecimal("#FFFF")
                 .descricao("Etapa em espera.")
