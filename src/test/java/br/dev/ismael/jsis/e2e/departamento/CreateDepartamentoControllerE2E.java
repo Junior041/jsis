@@ -9,6 +9,7 @@ import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
 import br.dev.ismael.jsis.domain.enterprise.entities.Loja;
 import br.dev.ismael.jsis.domain.enterprise.entities.UserRoles;
 import br.dev.ismael.jsis.domain.enterprise.entities.Usuario;
+import br.dev.ismael.jsis.e2e.utils.IntegrationTestUtils;
 import br.dev.ismael.jsis.e2e.utils.TestUtils;
 import jakarta.transaction.Transactional;
 import jdk.jfr.Description;
@@ -31,63 +32,44 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-@Transactional
-public class CreteDepartamentoControllerE2E {
+public class CreateDepartamentoControllerE2E {
+
     private MockMvc mvc;
+
     @Autowired
     private WebApplicationContext context;
-    @Autowired
-    private LojaRepository lojaRepository;
 
     @Autowired
     private DepartamentoRepository departamentoRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private Encrypter encrypter;
+    private IntegrationTestUtils testUtils;
 
     @BeforeEach
     public void setup() {
+        // Inicializa o MockMvc
         mvc = MockMvcBuilders.webAppContextSetup(context)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .build();
+
+        // Injeta as dependências em IntegrationTestUtils
+        testUtils = new IntegrationTestUtils(
+                context.getBean(LojaRepository.class),
+                context.getBean(DepartamentoRepository.class),
+                context.getBean(UsuarioRepository.class),
+                context.getBean(PasswordEncoder.class),
+                context.getBean(Encrypter.class)
+        );
     }
 
-
     @Test
-    @Description("Deve ser possível criar um departamento.")
-    public void test_sucesso() throws Exception {
-        Loja loja = lojaRepository.saveAndFlush(Loja.builder()
-                .idLoja(UUID.randomUUID())
-                .cpfCnpj("00000050000")
-                .nomeResponsavel("Ismael Junior")
-                .createdAt(LocalDateTime.now())
-                .build());
-        Departamento departamento = departamentoRepository.saveAndFlush(Departamento.builder()
-                .idDepartamento(1)
-                .loja(loja)
-                .nome("Programação")
-                .titulo("Programação")
-                .icone("icone.png")
-                .build());
-        Usuario usuario = this.usuarioRepository.saveAndFlush(Usuario.builder()
-                .idUsuario(UUID.randomUUID())
-                .departamento(departamento)
-                .email("teste@gamil.com")
-                .senha(this.passwordEncoder.encode("senha"))
-                .loja(loja)
-                .role(UserRoles.ADMIN)
-                .build());
+    public void testSuccess() throws Exception {
+        Loja loja = testUtils.createAndSaveLoja("00000050000", "Ismael Junior");
+        Departamento departamento = testUtils.createAndSaveDepartamento(loja, "Diretoria", "Diretoria", "icone.png");
 
-        var token = this.encrypter.encrypt(usuario);
+        String token = testUtils.createAndGetTokenForUser("teste@gmail.com", "senha", loja, departamento, UserRoles.ADMIN);
+
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/departamento")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TestUtils.objectToJSON(
@@ -100,8 +82,9 @@ public class CreteDepartamentoControllerE2E {
                 ))
                 .header("Authorization", token)
         ).andReturn();
+
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        Boolean departamentoInDatabase = this.departamentoRepository.findByTituloAndLojaIdLoja("Programação",loja.getIdLoja()).isPresent();
+        Boolean departamentoInDatabase = this.departamentoRepository.findByTituloAndLojaIdLoja("Vendas", loja.getIdLoja()).isPresent();
         assertThat(departamentoInDatabase).isTrue();
     }
 }
