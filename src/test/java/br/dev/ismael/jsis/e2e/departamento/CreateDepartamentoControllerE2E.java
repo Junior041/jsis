@@ -78,7 +78,6 @@ public class CreateDepartamentoControllerE2E {
                 ))
                 .header("Authorization", token)
         ).andReturn();
-        System.out.println(result.getResponse().getContentAsString());
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value());
         Boolean departamentoInDatabase = this.departamentoRepository.findByTituloAndLojaIdLoja("Vendas", lojaId).isPresent();
         assertThat(departamentoInDatabase).isTrue();
