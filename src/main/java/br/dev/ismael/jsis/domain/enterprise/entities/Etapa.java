@@ -1,12 +1,16 @@
 package br.dev.ismael.jsis.domain.enterprise.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Data
 @Entity(name = "etapa")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Etapa {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
