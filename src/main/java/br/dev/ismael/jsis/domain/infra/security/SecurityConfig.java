@@ -29,7 +29,8 @@ public class SecurityConfig {
     };
 
     private static final String[] POST_ADMIN_REQUESTS = {
-            "/departamento"
+            "/departamento",
+            "/origem"
     };
 
     @Autowired
