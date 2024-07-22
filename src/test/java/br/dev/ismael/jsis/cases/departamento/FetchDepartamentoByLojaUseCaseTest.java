@@ -1,6 +1,7 @@
 package br.dev.ismael.jsis.cases.departamento;
 
 import br.dev.ismael.jsis.domain.application.cases.departamento.FetchDepartamentoByLojaUseCase;
+import br.dev.ismael.jsis.domain.application.dto.departamento.DepartamentoResponseDTO;
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;
 import br.dev.ismael.jsis.domain.application.repositories.LojaRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
@@ -59,7 +60,6 @@ public class FetchDepartamentoByLojaUseCaseTest {
         when(this.departamentoRepository.findByLojaIdLoja(any(UUID.class))).thenReturn(departamentos);
 
         var result = this.sut.execute(loja.getIdLoja().toString());
-
         assertThat(result).isNotEmpty();
         assertThat(result).hasSize(20);
 
