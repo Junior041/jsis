@@ -3,6 +3,7 @@ package br.dev.ismael.jsis.cases.etapa;
 import br.dev.ismael.jsis.domain.application.cases.etapa.CreateEtapaUseCase;
 import br.dev.ismael.jsis.domain.application.dto.DepartamentoRequestDTO;
 import br.dev.ismael.jsis.domain.application.dto.EtapaRequestDTO;
+import br.dev.ismael.jsis.domain.application.errors.DadoNaoEncontradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.DepartamentoRepository;
 import br.dev.ismael.jsis.domain.application.repositories.EtapaRepository;
 import br.dev.ismael.jsis.domain.enterprise.entities.Departamento;
@@ -68,5 +69,22 @@ public class CreateEtapaUseCaseTest {
 
         assertThat(result).isNotNull();
         assertThat(result).isInstanceOf(Etapa.class);
+    }
+
+    @Test
+    @DisplayName("Não deve ser possível criar uma etapa se não achar um departamento")
+    public void test_departamento_nao_encontrado(){
+        when(this.departamentoRepository.findById(any(Integer.class))).thenReturn(Optional.empty());
+        try {
+            this.createEtapaUseCase.execute(EtapaRequestDTO.builder()
+                    .corHexadecimal("#FFFF")
+                    .descricao("Etapa em espera.")
+                    .fkDepartamento(1)
+                    .prioridade("1")
+                    .nome("Em Espera")
+                    .build());
+        }catch (Exception e){
+            assertThat(e).isInstanceOf(DadoNaoEncontradoErro.class);
+        }
     }
 }
