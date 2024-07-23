@@ -2,6 +2,7 @@ package br.dev.ismael.jsis.cases.atendimento;
 
 import br.dev.ismael.jsis.domain.application.cases.atendimento.CreateAtendimentoUseCase;
 import br.dev.ismael.jsis.domain.application.dto.atendimento.AtendimentoRequestDTO;
+import br.dev.ismael.jsis.domain.application.errors.DadoNaoEncontradoErro;
 import br.dev.ismael.jsis.domain.application.repositories.*;
 import br.dev.ismael.jsis.domain.enterprise.entities.*;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -86,5 +88,19 @@ public class CreateAtendimentoUseCaseTest {
                 .build());
         assertThat(result.getIdAtendimento()).isEqualTo(1);
     }
+    @Test
+    @DisplayName("Não deve ser possível cadastrar caso não ache a pessoa.")
+    public void test_erro_pessoa_nao_encontrada() {
+        // Mock repository response
+        when(pessoaRepository.findById(any())).thenReturn(Optional.empty());
 
+        // Assertions
+        assertThatThrownBy(() -> createAtendimentoUseCase.execute(AtendimentoRequestDTO.builder()
+                .descricao("Cliente interessado em uma casa")
+                .fkInteresse(1)
+                .fkOrigem(1)
+                .fkPessoa(UUID.randomUUID())
+                .cadastradoPorUsuarioId(UUID.randomUUID())
+                .build())).isInstanceOf(DadoNaoEncontradoErro.class);
+    }
 }
