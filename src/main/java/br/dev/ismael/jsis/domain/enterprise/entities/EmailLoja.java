@@ -17,7 +17,10 @@ public class EmailLoja {
     @Column(name = "idEmailLoja")
     private UUID idEmailLoja;
 
+    @Column(name = "titulo")
     private String titulo;
+
+    @Column(name = "email")
     private String email;
 
     @Column(name = "recebeLeads")
