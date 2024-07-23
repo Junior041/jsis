@@ -68,7 +68,7 @@ public class CreateEmailLojaUseCaseTest {
 
     }
     @Test
-    @DisplayName("não deve ser possível cadastrar o email de uma loja que não existe.")
+    @DisplayName("Não deve ser possível cadastrar o email de uma loja que não existe.")
     public void test_erro_loja_nao_encontra(){
         EmailLoja emailLoja = EmailLoja.builder()
                 .email("teste@gmail.com")
