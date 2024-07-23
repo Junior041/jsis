@@ -21,4 +21,7 @@ public class AtendimentoRequestDTO {
     private UUID fkPessoa;
     @Schema(example = "ea9f7977-7bf0-49a6-b9fe-8cf8ed983050")
     private UUID fkLoja;
+    @Schema(example = "c0f11c26-bb28-4b32-b1cb-478bc68b60fc")
+    private UUID cadastradoPorUsuarioId;
+
 }

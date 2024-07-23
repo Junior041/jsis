@@ -31,4 +31,8 @@ public class Atendimento {
     @ManyToOne
     @JoinColumn(name = "fkLoja", referencedColumnName = "idLoja", nullable = false)
     private Loja loja;
+
+    @ManyToOne
+    @JoinColumn(name = "cadastradoPorUsuarioId", referencedColumnName = "idUsuario", nullable = false)
+    private Usuario usuario;
 }
