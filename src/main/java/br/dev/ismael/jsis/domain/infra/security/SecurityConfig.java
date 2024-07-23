@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,6 +34,10 @@ public class SecurityConfig {
             "/origem"
     };
 
+    private static final String[] GET_ALL_USER_AUTHENTICATES = {
+            "/origem"
+    };
+
     @Autowired
     private SecurityFilter securityFilter;
 
@@ -41,18 +46,19 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        SecurityFilterChain  securityFilter = http.csrf(csrf -> csrf.disable())
+        return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(PERMIT_ALL_LIST).permitAll()
+                        .requestMatchers(GET_ALL_USER_AUTHENTICATES).authenticated()
                         .requestMatchers(POST_ADMIN_REQUESTS).hasRole(UserRoles.ADMIN.getRole())
                 )
                 .addFilterBefore(this.securityFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(customAuthenticationEntryPoint)
                 )
                 .build();
-        return securityFilter;
     }
 
     @Bean
