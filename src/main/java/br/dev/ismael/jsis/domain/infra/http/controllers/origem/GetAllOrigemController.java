@@ -1,18 +1,15 @@
 package br.dev.ismael.jsis.domain.infra.http.controllers.origem;
 
 import br.dev.ismael.jsis.domain.application.cases.origem.GetAllOrigemUseCase;
-import br.dev.ismael.jsis.domain.application.dto.origem.OrigemRequestDTO;
 import br.dev.ismael.jsis.domain.application.dto.origem.OrigemResponseDTO;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
