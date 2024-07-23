@@ -17,8 +17,8 @@ public class EmailLoja {
     @Column(name = "idEmailLoja")
     private UUID idEmailLoja;
 
-    @Column()
     private String titulo;
+    private String email;
 
     @Column(name = "recebeLeads")
     private Boolean recebeLeads;
