@@ -2,11 +2,33 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: jsis
+    container_name: jsis_postgres
     image: postgres:latest
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=jsis
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: jsis
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - jsis-network
+
+  jsis:
+    container_name: jsis_app
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - jsis-network
+
+volumes:
+  postgres_data:
+
+networks:
+  jsis-network:
+    driver: bridge
